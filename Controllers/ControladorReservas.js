@@ -19,11 +19,12 @@ export class ControladorReservas{
     }
 
     buscarReservasPorId(request,response){
+        let idReserva=request.params.idReserva
         
         try{
             response.status(200).json({
-                "mensaje":"Exito en la consulta",
-                "datos":"Aqui van los datos de habitaciones",
+                "mensaje":"Exito en la consulta "+idReserva,
+                "datos":"Aqui van los datos de habitaciones"
             })
         }catch(error){
             response.status(400).json({
@@ -34,11 +35,13 @@ export class ControladorReservas{
     }
 
     registrarReversa(request,response){
+        
+        let datosReserva=request.body
      
         try{
             response.status(200).json({
                 "mensaje":"Exito agregando la reserva",
-                "datos":"Aqui van los datos de la reserva",
+                "datos":datosReserva
             })
         }catch(error){
             response.status(400).json({
@@ -49,10 +52,16 @@ export class ControladorReservas{
     }
 
     editarReserva(request,response){
+
+        let id=request.params.idReserva
+        let datosReserva = request.body
+        console.log(id);
+        console.log(datosReserva);
+
         try{
             response.status(200).json({
-                "mensaje":"Exito editando la reserva",
-                "datos":"Aqui van los datos de habitaciones",
+                "mensaje":"Exito editando la reserva "+id,
+                "datos":datosReserva
             })
         }catch(error){
             response.status(400).json({

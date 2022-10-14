@@ -25,7 +25,7 @@ const EsquemaReserva = new Schema({
         type:Number
     },
     costoReserva:{
-        required:true,
+        required:false,
         type:Number
     }
     

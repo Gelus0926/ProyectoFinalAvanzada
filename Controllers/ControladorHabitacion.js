@@ -44,15 +44,29 @@ export class ControladorHabitacion{
      async registrarHabitacion(request,response){
         //response.send("Estoy agregando una habitacion desde el controlador")
 
-        let datosHabitacion=request.body
+        let datosHabitacion=request.body //obtengo datos del body
         let objetoServicioHabitacion=new servicioHabitacion()
         
         try{
-            await objetoServicioHabitacion.agregarHabitacionEnBD(datosHabitacion)
-            response.status(200).json({
-                "mensaje":"Exito agregando una habitacion",
-                "datos":null
-            })
+            //console.log(datosHabitacion.numeroMaximoPersonas)
+            if(datosHabitacion.numeroMaximoPersonas < 8){
+
+                await objetoServicioHabitacion.agregarHabitacionEnBD(datosHabitacion)
+
+                response.status(200).json({
+                    "mensaje":"Exito agregando una habitacion",
+                    "datos":null
+                })
+
+            }else{
+                response.status(400).json({
+                    "mensaje":"La habitacion tiene un limite de personas",
+                    "datos":null
+                })
+            }
+
+            
+            
         }catch(error){
             response.status(400).json({
                 "mensaje":"Error agregando una habitacion"+error,

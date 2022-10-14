@@ -24,18 +24,6 @@ export class servidorAPI{
 
     atenderPeticiones(){
         this.app.use('/',rutas)
-        /* this.app.get('/hotelesgelus/habitaciones', function (req, res) {
-            res.send('Buscando todas las habitaciones')
-          })
-        this.app.get('/hotelesgelus/habitacion/:id', function (req, res) {
-              res.send('Buscando una habitacion por id')
-          })
-        this.app.post('/hotelesgelus/habitacion', function (req, res) {
-              res.send('Agregando una habitacion')
-          })
-        this.app.put('/hotelesgelus/habitacion', function (req, res) {
-              res.send('Editando una habitacion')
-          }) */
     }
 
     conectarConBD(){

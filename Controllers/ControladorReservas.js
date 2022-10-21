@@ -53,11 +53,15 @@ export class ControladorReservas{
             let numeroPersonas = datosReserva.numeroNinos+datosReserva.numeroAdultos;
             let entrada = new Date(datosReserva.fechaEntrada);
             let salida = new Date(datosReserva.fechaSalida);
-            const diffInDays = Math.floor((salida - entrada) / (1000 * 60 * 60 * 24))+1;
+            const diffInDays = Math.floor((salida - entrada) / (1000 * 60 * 60 * 24));
+            let costo= 0
             if(diffInDays>0){
 
                 if(maxPerson>=numeroPersonas){
                     
+                    costo = Number(datosHabitacion.valorNoche)*Numer(diffInDays)
+                    costoReserva.costoReserva = costo;
+
                     response.status(200).json({
                         "mensaje":"Exito agregando la reserva",
                         "datos":null,
@@ -79,7 +83,7 @@ export class ControladorReservas{
             }
 
             console.log(datosHabitacion);
-            //await objetoServicioReserva.agregarReservaEnBD(datosReserva)
+            await objetoServicioReserva.agregarReservaEnBD(datosReserva)
         }catch(error){
             response.status(400).json({
                 "mensaje":"Error en la reserva"+error,

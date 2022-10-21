@@ -49,7 +49,7 @@ export class ControladorReservas{
         try{
 
             let datosHabitacion = await objetoServicioHabitacion.buscarHabitacionPorId(datosReserva.idHabitacion);
-            let maxPerson = datosHabitacion.numeroMaximoPersonas
+            let maxPersonas = datosHabitacion.numeroMaximoPersonas
             let numeroPersonas = datosReserva.numeroNinos+datosReserva.numeroAdultos;
             let entrada = new Date(datosReserva.fechaEntrada);
             let salida = new Date(datosReserva.fechaSalida);
@@ -57,14 +57,15 @@ export class ControladorReservas{
             let costo= 0
             if(diffInDays>0){
 
-                if(maxPerson>=numeroPersonas){
+                if(maxPersonas >= numeroPersonas){
                     
-                    costo = Number(datosHabitacion.valorNoche)*Numer(diffInDays)
-                    costoReserva.costoReserva = costo;
+                    costo = Number(datosHabitacion.valorNoche)*Number(diffInDays)
+                    datosReserva.costoReserva = costo;
+                    await objetoServicioReserva.agregarReservaEnBD(datosReserva)
 
                     response.status(200).json({
                         "mensaje":"Exito agregando la reserva",
-                        "datos":null,
+                        "datos":datosReserva,
                         "estado":true
                     })
                 }else{
@@ -83,7 +84,6 @@ export class ControladorReservas{
             }
 
             console.log(datosHabitacion);
-            await objetoServicioReserva.agregarReservaEnBD(datosReserva)
         }catch(error){
             response.status(400).json({
                 "mensaje":"Error en la reserva"+error,
@@ -100,10 +100,10 @@ export class ControladorReservas{
         let objetoServicioReserva=new servicioReservas()
 
         try{
-            //await objetoServicioReserva.editarReserva(id,datosReserva)
+            await objetoServicioReserva.editarReserva(id,datosReserva)
             response.status(200).json({
                 "mensaje":"Exito editando la reserva "+id,
-                "datos":null
+                "datos":datosReserva
             })
         }catch(error){
             response.status(400).json({
@@ -114,19 +114,18 @@ export class ControladorReservas{
     }
     async borrarReserva(request,response){
 
-        let id=request.params.idReserva
-        let datosReserva = request.body
+        let id_del = request.params.idReserva
         let objetoServicioReserva=new servicioReservas()
-
+        console.log(id_del);
         try{
-            //await objetoServicioReserva.editarReserva(id,datosReserva)
+            await objetoServicioReserva.borrarReserva(id_del)
             response.status(200).json({
-                "mensaje":"Exito editando la reserva "+id,
+                "mensaje":"Exito eliminando la reserva "+id_del,
                 "datos":null
             })
         }catch(error){
             response.status(400).json({
-                "mensaje":"Error en la reserva"+error,
+                "mensaje":"Error eliminando la reserva"+error,
                 "datos":null,
             })
         }

@@ -48,6 +48,7 @@ export class ControladorHabitacion{
         let objetoServicioHabitacion=new servicioHabitacion()
         
         try{
+            console.log(datosHabitacion);
             //console.log(datosHabitacion.numeroMaximoPersonas)
             if(datosHabitacion.numeroMaximoPersonas < 8){
 
